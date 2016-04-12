@@ -1,0 +1,34 @@
+{
+  "name": "appmetrics-influxdb",
+  "description": "An appmetrics data collector that sends metrics to InfluxDB",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Yieldbot, Inc.",
+    "url": "http://www.yieldbot.com"
+  },
+  "contributors": [
+    "Vinh Tran <vtran@yieldbot.com>"
+  ],
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/yieldbot/appmetrics-influxdb.git"
+  },
+  "scripts": {
+    "clean": "rm -rf node_modules/ && rm -rf reports/",
+    "lint": "jshint --reporter checkstyle `find . \\( -path \\*node_modules\\* -prune -o -path \\*public\\* -prune -o -path \\*reports\\* -prune -o -name \\*.js \\) -type f | awk 'NR>1{printf \" \"}{printf $0}'` > reports/jshint-checkstyle.xml",
+    "prepare": "npm install && mkdir -p reports",
+    "depcheck": "dependency-check . `find . \\( -path \\*node_modules\\* -prune -o -path \\*public\\* -prune -o -name \\*.js \\) -type f | awk 'NR>1{printf \" \"}{printf \"--entry \" $0}'`",
+    "test": "NODE_ENV=test multi='spec=- xunit=reports/mocha-xunit.xml' istanbul cover _mocha -- --reporter mocha-multi `find . \\( -path \\*node_modules\\* -prune -o -path \\*public\\* -prune -o -name test-\\*.js \\) -type f | awk 'NR>1{printf \" \"}{printf $0}'`",
+    "build": "npm run prepare && npm run depcheck && npm run lint"
+  },
+  "keywords": ["appmetrics", "monitoring", "influxdb"],
+  "devDependencies": {
+    "jshint": "^2.6.3",
+    "jshint-stylish": "^1.0.1",
+    "dependency-check": "^2.2.3",
+    "mocha": "^2.2.1",
+    "mocha-multi": "^0.6.0",
+    "istanbul": "^0.3.17"
+  }
+}
